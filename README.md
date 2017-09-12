@@ -1,14 +1,9 @@
 Broccoli Markdown Resolver ![Download count all time](https://img.shields.io/npm/dt/broccoli-markdown-resolver.svg) [![npm](https://img.shields.io/npm/v/broccoli-markdown-resolver.svg)](https://www.npmjs.com/package/broccoli-markdown-resolver)
 ======
 
-Given an input node, Broccoli Markdown Resolver outputs a file exporting an object tree of all .md files, with content and front matter parsed automatically.
+Given an input node, Broccoli Markdown Resolver outputs a file exporting data for our .md files, with content and frontmatter parsed automatically.
 
 ## Installation
-Using NPM:
-```
-npm install broccoli-markdown-resolver
-```
-Or using Yarn:
 ```
 yarn add broccoli-markdown-resolver
 ```
@@ -35,75 +30,85 @@ var outputNode = new MarkdownResolver(inputNodes, {
 });
 ```
 
-Consume like so:
+## Data
+
+Require the data
 
 ```js
 const markdownData = require('./path/to/markdown-file-data');
+```
 
-console.log(markdownData.tree);
-// =>
-// {
-//   "path/to/input-node": [
-//     {
-//       "path": "path/to/input-node/quick-start",
-//       "content": "\nGet started quickly with Acme API.\n",
-//       "attributes": {
-//         "title": "Quick Start"
-//       }
-//     },
-//     {
-//       "path": "path/to/input-node/sdks",
-//       "children": [
-//         {
-//           "path": "path/to/input-node/sdks/node-js",
-//           "content": "\nAbout the Acme Node.js SDK.\n",
-//           "attributes": {
-//             "title": "Node.js SDK"
-//           }
-//         }
-//       ],
-//       "content": "\nAcme offer SDKs in many different languages.\n",
-//       "attributes": {
-//         "title": "SDKs",
-//         "custom-attr": true
-//       }
-//     }
-//   ]
-// }
+### markdownData.trees
 
-console.log(markdownData.files);
-// =>
-// [
-//   {
-//     "path": "path/to/input-node/quick-start",
-//     "content": "\nGet started quickly with Acme API.\n",
-//     "attributes": {
-//       "title": "Quick Start"
-//     }
-//   },
-//   {
-//     "path": "path/to/input-node/sdks/node-js",
-//     "content": "\nAbout the Acme Node.js SDK.\n",
-//     "attributes": {
-//       "title": "Node.js SDK"
-//     }
-//   },
-//   {
-//     "path": "app/api-guides/sdks",
-//     "children": [
-//       {
-//         "path": "path/to/input-node/sdks/node-js",
-//         "content": "\nAbout the Acme Node.js SDK.\n",
-//         "attributes": {
-//           "title": "Node.js SDK"
-//         }
-//       }
-//     ],
-//     "content": "\nAcme offer SDKs in many different languages.\n",
-//     "attributes": {
-//       "title": "SDKs",
-//       "custom-attr": true
-//     }
-//   }
-// ]
+Returns a tree of markdown data for each inputNode.
+
+```js
+{
+  "path/to/input-node": [
+    {
+      "path": "path/to/input-node/quick-start",
+      "content": "\nGet started quickly with Acme API.\n",
+      "attributes": {
+        "title": "Quick Start"
+      }
+    },
+    {
+      "path": "path/to/input-node/sdks",
+      "children": [
+        {
+          "path": "path/to/input-node/sdks/node-js",
+          "content": "\nAbout the Acme Node.js SDK.\n",
+          "attributes": {
+            "title": "Node.js SDK"
+          }
+        }
+      ],
+      "content": "\nAcme offer SDKs in many different languages.\n",
+      "attributes": {
+        "title": "SDKs",
+        "custom-attr": true
+      }
+    }
+  ]
+}
+```
+
+### markdownData.files
+
+Returns a list of all files in a flat object format.
+
+```js
+[
+  {
+    "path": "path/to/input-node/quick-start",
+    "content": "\nGet started quickly with Acme API.\n",
+    "attributes": {
+      "title": "Quick Start"
+    }
+  },
+  {
+    "path": "path/to/input-node/sdks/node-js",
+    "content": "\nAbout the Acme Node.js SDK.\n",
+    "attributes": {
+      "title": "Node.js SDK"
+    }
+  },
+  {
+    "path": "path/to/input-node/sdks",
+    "children": [
+      {
+        "path": "path/to/input-node/sdks/node-js",
+        "content": "\nAbout the Acme Node.js SDK.\n",
+        "attributes": {
+          "title": "Node.js SDK"
+        }
+      }
+    ],
+    "content": "\nAcme offer SDKs in many different languages.\n",
+    "attributes": {
+      "title": "SDKs",
+      "custom-attr": true
+    }
+  }
+]
 ```
