@@ -1,0 +1,7 @@
+/tmp
+.gitignore
+.eslintrc.js
+/tests
+/DEBUG
+Icon^M^M
+Icon*
