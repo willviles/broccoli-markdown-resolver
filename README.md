@@ -1,5 +1,7 @@
-Broccoli Markdown Resolver ![Download count all time](https://img.shields.io/npm/dt/broccoli-markdown-resolver.svg) [![npm](https://img.shields.io/npm/v/broccoli-markdown-resolver.svg)](https://www.npmjs.com/package/broccoli-markdown-resolver)
+Broccoli Markdown Resolver
 ======
+
+[![Build Status](https://travis-ci.org/willviles/broccoli-markdown-resolver.svg)](https://travis-ci.org/willviles/broccoli-markdown-resolver) ![Download count all time](https://img.shields.io/npm/dt/broccoli-markdown-resolver.svg) [![npm](https://img.shields.io/npm/v/broccoli-markdown-resolver.svg)](https://www.npmjs.com/package/broccoli-markdown-resolver)
 
 Given an input node, Broccoli Markdown Resolver outputs a file exporting data for our .md files, with content and frontmatter parsed automatically.
 
