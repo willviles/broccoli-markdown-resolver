@@ -60,6 +60,16 @@ MarkdownResolver.prototype.readDirectory = function(srcPath, allFiles) {
   }, []);
 }
 
+MarkdownResolver.prototype.readFile = function (srcPath, allFiles) {
+  let content = fs.readFileSync(srcPath, { encoding: 'utf8' });
+  content = frontmatter(content);
+  let entry = { path: srcPath };
+  entry.content = content.body;
+  entry.attributes = content.attributes;
+  allFiles.push(entry);
+  return [entry];
+}
+
 MarkdownResolver.prototype.relativePath = function(srcDir) {
   let relPath = srcDir.replace(this.options.basePath, '');
   return relPath.replace(/^\/|\/$/g, '');
@@ -69,7 +79,8 @@ MarkdownResolver.prototype.build = function() {
   let output = { files: [] };
 
   output.trees = Array.prototype.reduce.call(this._inputNodes, (trees, srcDir) => {
-    trees[this.relativePath(srcDir)] = this.readDirectory(srcDir, output.files);
+    let isFile = fs.statSync(srcDir).isFile();
+    trees[this.relativePath(srcDir)] = isFile ? this.readFile(srcDir, output.files) : this.readDirectory(srcDir, output.files);
     return trees;
   }, {});
 
