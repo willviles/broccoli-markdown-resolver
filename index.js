@@ -32,7 +32,7 @@ MarkdownResolver.prototype.readDirectory = function(srcPath, allFiles) {
 
     let existingTreeNode = Array.prototype.find.call(tree, (file, i) => {
       index = i;
-      return file.path === relativePath;
+      return this.normalizeSlashes(file.path) === relativePath;
     });
 
     if (existingTreeNode) {
@@ -62,7 +62,11 @@ MarkdownResolver.prototype.readDirectory = function(srcPath, allFiles) {
 
 MarkdownResolver.prototype.relativePath = function(srcDir) {
   let relPath = srcDir.replace(this.options.basePath, '');
-  return relPath.replace(/^\/|\/$/g, '');
+  return this.normalizeSlashes(relPath).replace(/^\/|\/$/g, '');
+}
+
+MarkdownResolver.prototype.normalizeSlashes = function(path) {
+  return path.replace(/\\/g, '/');
 }
 
 MarkdownResolver.prototype.build = function() {
